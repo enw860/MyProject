@@ -35,7 +35,7 @@ function hideAbout(){
 function addAboutContent(){
 	$("#aboutus")
 	.append("<h3>Features</h3>")
-	.append("<p>please see our <a href=\"https://github.com/FallCSC309/assignment-2-bang/blob/master/Solutions.md\">github site</a></p>")
+	.append("<p>please see our <a href=\"https://github.com/enw860/MyProject/tree/master/MyWebsite/Weather/Description.md\">github site</a></p>")
 	.append("<h3>Source</h3>")
 	.append("<p>Icons from <a href=\"http://erikflowers.github.io/weather-icons/\">Weather Icons</a></p>")
 	.append("<p>Weather date comes from <a href=\"https://developer.yahoo.com/weather/\">Yahoo weather</a>.</p>")
