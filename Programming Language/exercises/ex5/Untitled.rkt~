@@ -1,0 +1,13 @@
+#lang racket
+
+(define (isElemInlist val acc)
+  (let [(isExist (member val acc))]
+    (if (equal? isExist #f)
+        (append (list val) acc)
+        acc)))
+
+(define (remove-dup lst)
+  (foldl isElemInlist (list) lst))
+
+(define (union-lst a b)
+  (remove-dup (append a b)))

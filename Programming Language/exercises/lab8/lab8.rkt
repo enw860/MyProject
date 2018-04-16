@@ -1,0 +1,196 @@
+#lang racket #| CSC324 Winter 2018: Lab 8 |#
+(require "stack_choice.rkt")
+(require "streams.rkt")
+
+;-------------------------------------------------------------------------------
+; Review: arithmetic expression generator from lecture
+;-------------------------------------------------------------------------------
+(define (atom) (-< 1 2 3 4))
+
+(define plus-rule (lambda (e1 e2) (format "(~a + ~a)" e1 e2)))
+(define times-rule (lambda (e1 e2) (format "(~a * ~a)" e1 e2)))
+(define (rule) (-< plus-rule times-rule))
+
+
+#|
+(expression-of-rank k)
+  k: A non-negative integer
+
+  Returns a (choice of) binary arithmetic expression of rank k.
+|#
+(define/match (expression-of-rank k)
+  [(0) (atom)]
+  [(1) ((rule) (atom) (atom))]
+  [(_)
+   (-<
+    ; Combinations of k-1 and 0-(k-2).
+    ((rule)
+     (expression-of-rank (- k 1))
+     (expression-of-rank (num-between 0 (- k 2))))
+    ; Combinations of 0-(k-2) and k-1.
+    ((rule)
+     (expression-of-rank (num-between 0 (- k 2)))
+     (expression-of-rank (- k 1)))
+    ; Combinations of k-1 and k-1.
+    ((rule)
+     (expression-of-rank (- k 1))
+     (expression-of-rank (- k 1))))])
+
+
+;-------------------------------------------------------------------------------
+; Task 1: Generalizing expression generation
+;-------------------------------------------------------------------------------
+#|
+(expression-of-rank-gen grammar k)
+  grammar: A list containing two thunks, where the first thunk returns a choice
+           of an atom in the grammar, and the second returns a choice of a rule
+           in the grammar.
+  k: A non-negative integer
+
+  Returns a (choice of) binary expression of rank k from the grammar.
+|#
+(define (expression-of-rank-gen grammar k)
+  (let ([elements (first grammar)]
+        [rules (second grammar)])
+    (cond
+      [(equal? k 0) (elements)]
+      [(equal? k 1) ((rules) (elements) (elements))]
+      [else
+       (-<
+        ((rules)
+         (expression-of-rank-gen grammar (- k 1))
+         (expression-of-rank-gen grammar (num-between 0 (- k 2))))
+        ((rules)
+         (expression-of-rank-gen grammar (num-between 0 (- k 2)))
+         (expression-of-rank-gen grammar (- k 1)))
+        ((rules)
+         (expression-of-rank-gen grammar (- k 1))
+         (expression-of-rank-gen grammar (- k 1))))
+       ])))
+
+
+; Your function should work for the following input grammars.
+(define arithmetic-grammar (list atom rule))
+(define life-choices-grammar
+  (list
+   (lambda ()
+     (-< "cats" "dogs" "birds" "love" "terror" "hunger"))
+   (lambda ()
+     (-< (lambda (e1 e2) (format "~a and ~a!" e1 e2))
+         (lambda (e1 e2) (format "~a or ~a?" e1 e2))))))
+;-------------------------------------------------------------------------------
+; Task 2: Making change
+;-------------------------------------------------------------------------------
+#|
+(make-change n)
+  n: A non-negative integer
+
+  Returns a choice of a list of 1's and 5's whose sum is n.
+  The returned list should be in *non-increasing order*, i.e., all 5's should appear before all 1's.
+
+  Note: we strongly recommend writing a helper function that takes a number of returns a list of 1's
+  of that length. This will prime you to the recursive thinking required to generalize this function.
+|#
+(define (make-1s n)
+  (if (= n 0) (list)
+      (list* 1 (make-1s (- n 1)))))
+
+(define (make-change n)
+  (if (< n 5) (make-1s n)
+      (-< (list* 5 (make-change (- n 5)))
+          (make-1s n))))
+
+(module+ test
+  (require rackunit)
+
+  (test-equal? "make-change 0"
+               (list->set (stream->list (generate (make-change 0))))
+               (set (list)))
+  (test-equal? "make-change 1"
+               (list->set (stream->list (generate (make-change 1))))
+               (set (list 1)))
+  (test-equal? "make-change 5"
+               (list->set (stream->list (generate (make-change 5))))
+               (set (list 5) (list 1 1 1 1 1)))
+
+  (test-equal? "make-change 13"
+               (list->set (stream->list (generate (make-change 13))))
+               (set (list 5 5 1 1 1)
+                    (list 5 1 1 1 1 1 1 1 1)
+                    (list 1 1 1 1 1 1 1 1 1 1 1 1 1))))
+
+
+#|
+(make-change-gen coins n)
+  coins: A list of distinct positive integers, sorted in decreasing order.
+  n: An integer.
+
+  Returns a choice of a list of numbers in `coins` whose sum is `n`.
+  (As before, duplicates are allowed in the output!)
+
+  If no possible combinations in `coins` sums to n (including when n is negative),
+  *call (fail)*. (This is useful inside recursive calls.)
+  But returns an *empty list* if n = 0. This are two different cases!
+
+  Notes:
+    1. Think recursively here. You should recurse on both `coins` and `n` in some way.
+    2. You should look at the new function `fail` in the stack_choice.rkt starter
+       code, which is like `next` except without the prompt.
+
+       Good use of `fail` is necessary to avoid accidentally combining 'done with
+       coin values, e.g. (list 5 5 'done), and this is probably the trickiest part of
+       this lab.
+    3. You might need to have the output choices come out in a different order
+       than in `make-change`. That's fine! You may find the following pseudocode helpful:
+
+       (-< (a combination of (rest coins) whose sum is n)
+           (if ((- n (first coins)) can be made from coins)
+               (a combination of coins that uses (first coins) whose sum is n)
+               'done))
+|#
+
+(define (mod a b)
+  (if (< a b) a
+      (mod (- a b) b)))
+
+(define (make-change-gen coins n)
+  (let ([sorted-coins (sort coins >)]
+        [largest-coin (apply max coins)]
+        [unit (apply min coins)])
+    (cond
+      [(equal? n 0) (list)]
+      [(< n unit) (raise "fail to coin")]
+      [else
+       (cond
+         [(equal? unit largest-coin)
+          (if (equal? 0 (mod n unit))
+              (list* unit (make-change-gen sorted-coins (- n unit)))
+              (-<))]
+         [(< n largest-coin)
+          (make-change-gen (rest sorted-coins) n)]
+         [else
+          (if (equal? 0 (mod n (apply min (rest sorted-coins))))
+              (-< (list* largest-coin (make-change-gen sorted-coins (- n largest-coin)))
+                  (make-change-gen (rest sorted-coins) n))
+              (list* largest-coin (make-change-gen sorted-coins (- n largest-coin))))]
+         )])))
+
+(stream->list (generate (make-change-gen (list 100 30) 990)))
+
+(module+ test
+  (test-equal? "make-change-gen (10 3) 13"
+               (list->set (stream->list (generate (make-change-gen (list 10 3) 13))))
+               (set (list 10 3)))
+  
+  (test-equal? "make-change (5 1) 13"
+                 (list->set (stream->list (generate (make-change-gen (list 5 1) 13))))
+                 (set (list 5 5 1 1 1)
+                      (list 5 1 1 1 1 1 1 1 1)
+                      (list 1 1 1 1 1 1 1 1 1 1 1 1 1)))
+
+  ; A note about this test. It may seem weird that the expected output is (set)
+  ; and not (set 'done). The reason is that `generate` ignores 'done values it receives
+  ; as choices. (See its implementation in stack_choices.rkt.)
+  (test-equal? "no combinations possible"
+               (list->set (stream->list (generate (make-change-gen (list 10 3) 8))))
+               (set)))

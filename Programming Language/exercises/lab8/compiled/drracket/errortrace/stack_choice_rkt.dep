@@ -1,0 +1,1 @@
+("6.11" ("d52a86f8fae26edfc61371bdfec812dac17109aa" . "78be8682487ee00a115a76552ae4d1da983b499a") #"/Users/lionel/desktop/csc324/exercises/lab8/streams.rkt" (collects #"errortrace" #"errortrace-key.rkt") (collects #"racket" #"control.rkt") (collects #"racket" #"main.rkt") (collects #"racket" #"runtime-config.rkt"))

@@ -1,0 +1,66 @@
+#lang racket #| CSC324 Winter 2018: Exercise 4 |#
+#|
+★ Before starting, please review the exercise guidelines at
+https://www.cs.toronto.edu/~david/csc324/homework.html ★
+|#
+;-------------------------------------------------------------------------------
+(provide matches? my-match)
+
+
+#|
+(matches? pattern value)
+  pattern: A datum representing a pattern in the grammar specified in the handout.
+  value: An integer, list of integers, or nested list of integers.
+
+  Returns #t if the value matches the given pattern, and #f otherwise.
+
+  You may *not* use built-in Racket pattern-matching in your implementation.
+
+  Note: most Racket higher-order list functions (like map and andmap) can take in more
+  than one list.
+|#
+(define (matches? pattern expr)
+  (void))
+
+
+(module+ test
+  (require rackunit)
+
+  ; Note that we use `test-true` and `test-false` rather than `test-equal?` here.
+  (test-true "Simple numeric pattern" (matches? 3 3))
+  (test-true "Simple wildcard pattern" (matches? '_ 5))
+  (test-true "Simple fixed-length list pattern" (matches? '(Plist 1 _ 3) (list 1 2 3)))
+  (test-false "Simple recursive list pattern" (matches? '(Pcons 1 (Plist _ 3)) (list 1 2 4))))
+
+
+#|
+(my-match expr pairs)
+  expr: An integer, list of integers, or nested list of integers.
+  pairs: A datum containing a list of lists, where each inner list has exactly two elements:
+         a pattern specified by the grammar from the handout, and an arbitrary value.
+
+  For each pair in `pairs`, this function checks whether the given `expr` matches the pattern,
+  and if so, returns the corresponding value.
+
+  Assume that `expr` always matches at least one pattern in `pairs`.
+  If the expression matches more than one pattern, return the value corresponding to the
+  *first* pattern that the expression matches.
+
+  Again, you may *not* use built-in Racket pattern-matching in your implementation.
+
+  Note: this is very similar to the built-in Racket `match` syntactic form,
+  although of course we're only considering a very small subset of patterns here.
+|#
+(define (my-match expr pairs)
+  (void))
+
+
+(module+ test
+  (test-equal? "One pair"
+               (my-match 4 '((4 "Hello")))
+               "Hello")
+
+  (test-equal? "Two pairs"
+               (my-match (list 1 2 3) '((4 "Hello")
+                                        ((Pcons 1 (Plist _ _)) "Hi")))
+               "Hi"))
