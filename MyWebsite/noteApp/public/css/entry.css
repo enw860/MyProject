@@ -1,0 +1,144 @@
+html,body{
+	position: relative;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    font: 400 15px/1.8 "Lato", sans-serif;
+    color: #777;
+    overflow: auto;
+    background-color: #fcfcfa;
+    min-width: 1280px;
+    min-height: 400px;
+}
+
+#main{
+	height: 100%;
+	width: 100%;
+    margin: 0;
+}
+
+#noteTaker{
+	position: relative;
+	text-align: center;
+	top: 5%;
+	font-size: 5vmin;
+}
+
+#userInfo{
+	position: absolute;
+	padding-right: 10%;
+	right: 0%;
+}
+
+#logout{
+	position: relative;
+	float: right;
+	cursor: pointer;
+	color: #8fcbfc;
+}
+
+#Entry{
+    position: relative;
+    width: 50%;
+    height: 70%;
+    left: 25%;
+    right: 25%;
+    top: 10%;
+    margin: 0;
+    min-height: 300px;
+    min-width: 300px;
+}
+
+#EntryContent{
+	position: inherit;
+	height: 80%;
+}
+
+#EntryBody, #content, .myform{
+	position: relative;
+	height: 100%;
+}
+
+#EntryBody{
+	background-color: #696160;
+}
+
+#EntryTabs{
+	position: relative;
+	overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+}
+
+#EntryTabs button{
+	position: relative;
+	background-color: inherit;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 3% 2%;
+    transition: 0.3s;
+    font-size: 3vmin;
+    width: 50%;
+    color: white;
+    background-color: #696160;
+}
+
+#EntryTabs button:hover {
+    background-color: #ddd;
+}
+
+#EntryTabs button.active {
+    background-color: #ccc;
+    color: black;
+}
+
+.inputbar{
+	position: relative;
+	width: 80%;
+	left: 10%;
+	font-size: 2vmin;
+}
+
+.inputs{
+	position: relative;
+	padding-top: 10%;
+}
+
+.inputs label{
+	margin-top: 2%;
+	position: relative;
+	width: 40%;
+	float: right;
+	color: white;
+	font-size: 2vmin;
+}
+
+input, .submit_button{
+	padding: 3% 0%;
+	margin: 1%;
+}
+
+.submit_button{
+	position: absolute;
+	width: 80%;
+	left: 10%;
+	font-size: 2vmin;
+	text-align: center;
+    background-color:#8fcbfc;
+    color:#fafafa;
+    bottom: 5%;
+}
+
+.err_m{
+	position: absolute;
+	color: white;
+	left: 12%;
+	top: 2%;
+}
+
+button:disabled{
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
+}

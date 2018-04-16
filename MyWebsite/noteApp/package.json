@@ -1,0 +1,29 @@
+{
+  "name": "noteapp",
+  "version": "1.0.0",
+  "description": "A note taking web application that allows user manipulate their notes",
+  "main": "server.js",
+  "scripts": {
+    "react": "sh ./public/script/bash_cmd/convert.sh ./public/script/jsx ./public/script/frontend ."
+  },
+  "author": "Enhao (Lionel)",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "latest",
+    "cookie-parser": "latest",
+    "ejs": "latest",
+    "express": "latest",
+    "express-session": "latest",
+    "highlight-within-textarea": "^2.0.5",
+    "js": "latest",
+    "method-override": "latest",
+    "mongodb": "^2.2.33",
+    "morgan": "latest",
+    "request": "latest"
+  },
+  "devDependencies": {
+    "babel-cli": "latest",
+    "babel-preset-react": "latest",
+    "webpack": "^3.8.1"
+  }
+}

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Note Taker</title>
+		<script crossorigin src="https://unpkg.com/react/umd/react.development.js"></script>
+    	<script crossorigin src="https://unpkg.com/react-dom/umd/react-dom.development.js"></script>
+    	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    	<script src="script/frontend/jquery.highlight-within-textarea.js"></script>
+    	
+    	<link rel="stylesheet" type="text/css" href="css/entry.css"/>
+    	<link rel="stylesheet" type="text/css" href="css/note.css"/>
+		<link rel="stylesheet" type="text/css" href="css/jquery.highlight-within-textarea.css">
+
+    	<meta charset="UTF-8">
+    </head>
+
+    <body>
+		<div id="main">
+			<div id="noteTaker">Note Taker</div>
+			<div id="userInfo">
+				Hello,<span id="userEmail"></span>
+				/<a id="logout" onclick="logoutAction()">logout</a>
+			</div>
+
+			<div id="note"></div>
+			<div id="Entry"></div>	
+		</div>
+	</body>
+
+	<script src="script/frontend/loginReact.js"></script>
+	<script src="script/frontend/registerReact.js"></script>
+	<script src="script/frontend/noteReact.js"></script>
+	<script src="script/frontend/entry.js"></script>
+	<script src="script/frontend/note.js"></script>
+</html>
+		

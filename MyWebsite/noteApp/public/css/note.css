@@ -1,0 +1,156 @@
+#note{
+	position: relative;
+    width: 80%;
+    height: 80%;
+    left: 10%;
+    top: 10%;
+    margin: 0;
+    min-height: 300px;
+    min-width: 300px;	
+}
+
+#NoteBody{
+	position: relative;
+	height: 100%;
+	width: 100%;
+}
+
+#result{
+	position: relative;
+	top: 0%;
+	float: left;
+	width: 200px;	
+}
+
+#search{
+	position: relative;
+	width: 100%;
+	margin-bottom: 15px;
+	background: white;
+	border: 1px solid #888;
+	font-size: 2vmin;
+}
+
+#searchInput{
+	position: relative;
+	border: 0px;
+	width: 100%;
+	margin: 0;
+}
+
+#NoteBlock{
+	position: relative;
+	max-height: 300px;
+	background: white;
+	border: 1px solid #888;
+	overflow-x: hidden;
+}
+
+#NoteContent{
+	position: relative;
+	top: 0%;
+	float: right;
+	width: 780px;
+}
+
+#Note_Title{
+	position: relative;
+	width: 780px;
+	height: 10px;
+	margin: 0;
+	margin-bottom: 15px;
+	padding: 1% 0%;
+	border: 1px solid #888;
+}
+
+#contentwrapper{
+	position: relative;
+	width: 780px;
+	height: 300px;
+	padding: 0;
+	background: white;
+}
+
+.hwt-input, .hwt-content{
+	position: relative;
+	width: 100%;
+	height: 300px;
+}
+
+#Note_Content{
+	position: relative;
+	width: 780px;
+	height: 300px;
+	word-wrap: break-word; 
+	resize: none;
+	border: 1px solid #888;
+	padding: 0;
+	margin: 0;
+}
+
+#Note_Content:disabled{
+	background: #eff0f1 !important;
+}
+
+#Note_Title:disabled{
+	background-color: #eff0f1 !important;
+}
+
+#save_button{
+	position: relative;
+	float: right;
+	width: 70px;
+	font-size: 2vmin;
+	text-align: center;
+    background-color:#8fcbfc;
+    color:#fafafa;
+    bottom: 10px;
+    margin-top: 20px;
+    padding: 5px 10px;
+}
+
+.briefNote{
+	position: relative;
+	height: 5%;
+	width: 100%;
+	border: 1px solid #888;
+	font-size: 12px;
+}
+
+.briefNote:hover{
+	background: #777;
+	cursor: pointer;
+	color: white;
+}
+
+.briefNote a:hover{
+	cursor: pointer;
+}
+
+.noteTag{
+	position: relative;
+	width: 100%;
+}
+
+.idClose{
+	position: absolute;
+	top: 20%;
+	right: 5%;
+	width: 10%;
+	cursor: pointer;
+	z-index: 100;
+	text-align: center;
+	height: 40%;
+}
+
+.idClose:hover{
+	font-size: 18px;
+}
+
+#save_button:disabled{
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
+}
+
+
